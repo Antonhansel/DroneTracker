@@ -2,5 +2,5 @@
 
 int main(int argc, char **argv)
 {
-	startCapture *capture = new startCapture();
+	return startCapture();
 }

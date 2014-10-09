@@ -2,6 +2,7 @@
 NAME =  opencv
 
 SOURCES = src/main.cpp \
+		src/startCapture.cpp \
 
 OBJECT = $(SOURCES:.cpp=.o)
 
