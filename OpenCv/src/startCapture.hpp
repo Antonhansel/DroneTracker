@@ -12,6 +12,7 @@ class startCapture
 public:
 	startCapture();
 	~startCapture();
+	void 	detectAndDisplay(cv::Mat);
 protected:
 	std::string face_cascade_path;
 	std::string eyes_cascade_path;
