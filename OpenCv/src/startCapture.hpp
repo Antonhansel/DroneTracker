@@ -5,7 +5,10 @@
 #include <stdio.h>
 #include <iostream>
 #include <stdio.h>
+#include <QApplication>
 #include <opencv2/opencv.hpp>
+
+using namespace cv;
 
 class startCapture
 {
