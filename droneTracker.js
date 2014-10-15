@@ -3,34 +3,9 @@ var drone = require('ar-drone');
 var s = new cv.ImageStream()
 var _ = require('lodash');
 
-var readline = require('readline');
-
-var rl = readline.createInterface({
-	input: process.stdin,
-	output: process.stdout
-});
-
 var droneSocket = drone.createClient();
-//droneSocket.disableEmergency();
 
-rl.on('line', function (cmd) {
-	if (cmd == "on")
-	{
-		droneSocket.stop();
-		droneSocket.takeoff();
-	}
-	else if (cmd == "off")
-	{
-		droneSocket.stop();
-		droneSocket.land();
-	}
-});
-
-//droneSocket.takeoff();
-// droneSocket.after(10000, function() {
-//     this.land();
-//   });
-//droneSocket.on("navdata", console.log);
+var cmdLine = require("./modules/commandLine.js");
 
 s.on('data', _.throttle(function(matrix)
 {
