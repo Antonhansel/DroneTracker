@@ -1,0 +1,25 @@
+{
+  "name": "drone-tracker",
+  "version": "0.0.0",
+  "description": "",
+  "main": "droneTracker.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Antonhansel/DroneTracker.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Antonhansel/DroneTracker/issues"
+  },
+  "homepage": "https://github.com/Antonhansel/DroneTracker",
+  "dependencies": {
+    "ar-drone": "^0.3.2",
+    "lodash": "^2.4.1",
+    "opencv": "^1.0.0",
+    "readline": "0.0.4"
+  }
+}
