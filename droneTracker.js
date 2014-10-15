@@ -5,7 +5,7 @@ var _ = require('lodash');
 
 var droneSocket = drone.createClient();
 
-var cmdLine = require("./modules/commandLine.js");
+var cmdLine = require("./modules/commandLine.js")(droneSocket);
 
 s.on('data', _.throttle(function(matrix)
 {
