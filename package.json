@@ -18,6 +18,8 @@
   "homepage": "https://github.com/Antonhansel/DroneTracker",
   "dependencies": {
     "ar-drone": "^0.3.2",
+    "body-parser": "^1.9.0",
+    "express": "^4.9.7",
     "lodash": "^2.4.1",
     "opencv": "^1.0.0",
     "readline": "0.0.4"
