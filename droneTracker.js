@@ -8,6 +8,7 @@ var cmdLine = require("./modules/commandLine")(droneSocket, s);
 var faceDetect = require("./modules/faceDetect");
 
 var lastFrame;
+var lastData = "none";
 
 s.on('data', _.throttle(function(matrix)
 {
@@ -19,10 +20,15 @@ s.on('data', function(data)
 	lastFrame = data;
 })
 
+droneSocket.on('navdata', function(navdata)
+	{
+		lastData = data;
+	});
+
 var server = http.createServer(function(req, res)
 {
-    res.writeHead(200, {'Content-Type': 'image/png'});
-    res.write(lastFrame);
+    res.writeHead(200, {'Content-Type': 'text'});
+    res.write("local server up.");
     res.end();
 });
 
