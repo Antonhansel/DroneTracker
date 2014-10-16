@@ -31,7 +31,7 @@ var lastFrame;
 s.on('data', _.throttle(function(matrix)
 {
 	faceDetect.matrixHandler(matrix, cv, droneSocket);
-}, 500))
+}, 100))
 
 s.on('data', function(data)
 {
@@ -49,3 +49,4 @@ server.listen(8080);
 
 //piping pngstream to opencv handler
 droneSocket.getPngStream().pipe(s);
+var stream = droneSocket.getPngStream();

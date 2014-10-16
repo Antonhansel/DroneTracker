@@ -1,3 +1,5 @@
+var faceCount = 0;
+
 exports.matrixHandler = function matrixHandler(matrix, cv, droneSocket)
 {
 	matrix.detectObject(cv.FACE_CASCADE, {}, function(err, faces)
@@ -15,6 +17,7 @@ exports.matrixHandler = function matrixHandler(matrix, cv, droneSocket)
 		}
 		if (trueFace > 0)
 		{
+			//matrix.ellipse(saveFace.x + saveFace.width/2, saveFace.y + saveFace.height/2, saveFace.width/2, saveFace.height/2);
 			console.log ("POSITION:x=" + saveFace.x + " - x.y" + saveFace.y);
 			console.log("SIZE" + saveFace.width);
 			if (saveFace.width > 50)
@@ -28,13 +31,19 @@ exports.matrixHandler = function matrixHandler(matrix, cv, droneSocket)
 				{
 					droneSocket.stop();
 					console.log("rotate left");
-					droneSocket.counterClockwise(0.2);
+					droneSocket.counterClockwise(0.5);
+					droneSocket.after(100, function() {
+						this.stop();
+					})
 				}
 				else if (saveFace.x > 300)
 				{
 					droneSocket.stop();
 					console.log("rotate right");
-					droneSocket.clockwise(0.2);
+					droneSocket.clockwise(0.5);
+					droneSocket.after(100, function() {
+						this.stop();
+					})
 				}
 				else
 				{
