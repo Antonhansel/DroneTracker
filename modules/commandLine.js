@@ -2,10 +2,10 @@
 * @Author: antonhansel
 * @Date:   2014-10-15 14:48:01
 * @Last Modified by:   antonhansel
-* @Last Modified time: 2014-10-15 14:54:23
+* @Last Modified time: 2014-10-15 16:36:05
 */
 
-module.exports = function(droneSocket)
+module.exports = function(droneSocket, s)
 {
 	var readline = require('readline');
 
@@ -29,6 +29,15 @@ module.exports = function(droneSocket)
 		{
 			console.log("Stopping all drone actions...");
 			droneSocket.stop();
+		}
+		if (cmd == "up")
+		{
+			console.log("Going up...");
+			droneSocket.up(0.2);
+		}
+		if (cmd == "start")
+		{
+			droneSocket.getPngStream().pipe(s);
 		}
 	});
 }
