@@ -1,12 +1,10 @@
 var readline = require('readline');
-
-module.exports = function(droneSocket, s)
-{
-	var rl = readline.createInterface({
+var rl = readline.createInterface({
 		input: process.stdin,
 		output: process.stdout
-	});
+});
 
+module.exports = function(droneSocket){
 	rl.on('line', function (cmd) {
 		if (cmd == "on"){
 			droneSocket.stop();
@@ -21,11 +19,8 @@ module.exports = function(droneSocket, s)
 			droneSocket.stop();
 		}
 		if (cmd == "up"){
-			console.log("Going up...");
+			console.log("Going up..., type stop to stop the drone");
 			droneSocket.up(0.2);
-		}
-		if (cmd == "start"){
-			droneSocket.getPngStream().pipe(s);
 		}
 	});
 }

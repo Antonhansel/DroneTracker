@@ -1,13 +1,14 @@
-//drone opencv and cmdline stuff
-var cv = require('opencv');
+//////////////////////////////////////////////////////////////
+//Initialize stuff
+var config = require('./config/config.js');
 var drone = require('ar-drone');
-var http = require('http');
-var s = new cv.ImageStream()
-var _ = require('lodash');
 var droneSocket = drone.createClient();
-var cmdLine = require("./modules/commandLine")(droneSocket, s);
-var faceDetect = require("./modules/faceDetect");
+var http = require('http');
+var _ = require('lodash');
+var cmdLine = require("./modules/commandLine")(droneSocket);
+var detection = require("./modules/detection");
 
+/////////////////////////////////////////////////////////////
 //Api stuff
 var express = require("express");
 var api = express();
@@ -19,26 +20,34 @@ router.use(function(req, res, next){
 	console.log("Request: " + req);
 	next();
 });
-
-api.use("/api", router);
-api.listen(3000);
+api.use("/api", router); api.listen(config.apiPort);
+console.log("Api listening on port " + config.apiPort);
 
 var navData = require("./api/navData")(droneSocket, router);
 
+/////////////////////////////////////////////////////////////
 //image handling stuff
+var lastFrame;
+var pngStream = droneSocket.getPngStream();
 
-s.on('data', function(matrix){
-	//faceDetect.matrixHandler(matrix, cv, droneSocket);
-	console.log(Date());
+pngStream.on('error', console.log).on('data', function(pngBuffer){
+	lastFrame = pngBuffer;
+	detection.matrixHandler(pngBuffer);
 })
+//piping pngstream to opencv handler
 
+/////////////////////////////////////////////////////////////
+//Serving images on port 8080 for app
 var server = http.createServer(function(req, res){
-	res.writeHead(200, {'Content-Type': 'image/png'});
-	res.write("local server up.");
-	res.end();
+	if (!lastFrame){
+		res.writeHead(503);
+		res.end("No data");
+	}
+	else{
+		res.writeHead(200, {'Content-Type:': 'image/png'});
+		res.end(lastFrame);
+	}
 });
 
-server.listen(8080);
-console.log("server is listening on 8080");
-//piping pngstream to opencv handler
-droneSocket.getPngStream().pipe(s);
+server.listen(config.imagePort);
+console.log("Serving images on port "+ config.imagePort);
