@@ -16,12 +16,32 @@ var router = express.Router();
 var bodyParser = require("body-parser");
 
 api.use(bodyParser.json());
+
 router.use(function(req, res, next){
-	console.log("Request: " + req);
+	res.header("Access-Control-Allow-Origin", "*");
 	next();
 });
 api.use("/api", router); api.listen(config.apiPort);
 console.log("Api listening on port " + config.apiPort);
+
+router.get("/takeoff", function(req, res){
+	droneSocket.stop();
+	droneSocket.takeoff();
+	res.send();
+});
+
+router.get("/land", function(req, res){
+	droneSocket.stop();
+	droneSocket.land();
+	res.send();
+});
+
+router.get("/emergency", function(req, res)
+{
+	console.log("emergency");
+	droneSocket.disableEmergency();
+	res.send();
+});
 
 var navData = require("./api/navData")(droneSocket, router);
 
@@ -32,16 +52,17 @@ var pngStream = droneSocket.getPngStream();
 
 pngStream.on('error', console.log).on('data', function(pngBuffer){
 	lastFrame = pngBuffer;
-	detection.matrixHandler(pngBuffer);
+	detection.matrixHandler(pngBuffer, function(result){
+		if (result.length > 0) console.log(result);
+	});
 })
-//piping pngstream to opencv handler
 
 /////////////////////////////////////////////////////////////
 //Serving images on port 8080 for app
 var server = http.createServer(function(req, res){
 	if (!lastFrame){
 		res.writeHead(503);
-		res.end("No data");
+		res.end("No data yet, keep waiting");
 	}
 	else{
 		res.writeHead(200, {'Content-Type:': 'image/png'});
