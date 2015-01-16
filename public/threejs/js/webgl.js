@@ -13,22 +13,25 @@ jQuery(function(){
 	//////////////////////////////
 	//////////////////////////////
 	var ambient = new THREE.AmbientLight( 0x101030 );
-	scene.add( ambient );
+	scene.add(ambient);
 	var directionalLight = new THREE.DirectionalLight( 0xffeedd );
 	directionalLight.position.set( 0, 0, 1 );
-	scene.add( directionalLight );
+	scene.add(directionalLight);
 	renderer.setSize(window.innerWidth, window.innerHeight);
 	/////////////////////////////
 	/////////////////////////////
 	var img = new THREE.MeshBasicMaterial({ //CHANGED to MeshBasicMaterial
         map:THREE.ImageUtils.loadTexture('../staticImage')
     });
-    img.map.needsUpdate = true; //ADDED
+    //img.map.needsUpdate = true; //ADDED
 
     // plane
-    var plane = new THREE.Mesh(new THREE.PlaneGeometry(10, 10),img);
-    plane.overdraw = true;
-    scene.add(plane);
+    var imgDisplay = new THREE.Mesh(new THREE.PlaneGeometry(10, 10), img);
+   	//imgDisplay.overdraw = true;
+   	//scene.add(imgDisplay);
+
+    //////////////////////////////
+    //////////////////////////////
 	var manager = new THREE.LoadingManager();
 	manager.onProgress = function ( item, loaded, total ) {
 		console.log(item, loaded, total);
@@ -37,7 +40,7 @@ jQuery(function(){
 	var onProgress = function(xhr){
 		if (xhr.lengthComputable){
 			var percentComplete = xhr.loaded / xhr.total * 100;
-			console.log( Math.round(percentComplete, 2) + '% downloaded' );
+			console.log(Math.round(percentComplete, 2) + '% downloaded');
 		}
 	};
 	var onError = function(xhr){
