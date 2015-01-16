@@ -1,5 +1,4 @@
-module.exports = function(droneSocket, router)
-{
+module.exports = function(droneSocket, router){
 	var lastData = "none";
 
 	droneSocket.on('navdata', function(navdata){
