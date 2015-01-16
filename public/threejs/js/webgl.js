@@ -1,10 +1,14 @@
+var scene;
+var drone;
+var oldY = 0;
+
 jQuery(function(){
-	var scene = new THREE.Scene();
+	scene = new THREE.Scene();
 	var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
 	var renderer = new THREE.WebGLRenderer();
 	oculuscontrol = new THREE.OculusControls(camera);
 	var clock = new THREE.Clock();
-	oculuscontrol.connect();
+	//oculuscontrol.connect(); no server for now
 
 	//////////////////////////////
 	//////////////////////////////
@@ -31,12 +35,12 @@ jQuery(function(){
 		console.log(xhr);
 	};
 	var loader = new THREE.ImageLoader( manager );
-				loader.load('obj/UV_Grid_Sm.jpg', function (image){
-					texture.image = image;
-					texture.needsUpdate = true;
-				});
+	loader.load('obj/UV_Grid_Sm.jpg', function (image){
+		texture.image = image;
+		texture.needsUpdate = true;
+	});
 	var loader = new THREE.OBJLoader(manager);
-	var drone;
+
 	loader.load('obj/MQ-27-2.obj', function(object){
 		object.traverse( function(child){
 			if (child instanceof THREE.Mesh){
@@ -82,43 +86,17 @@ jQuery(function(){
 	}
 	var line = new THREE.Line(geometry, material, THREE.LinePieces);
 	scene.add(line);
-
-	var oldY = 0;
-	function httpGet(){
-		var xmlhttp = new XMLHttpRequest();
-		var url = "http://localhost:3000/api/navdata";
-			//xmlhttp.crossDomain = true;
-			xmlhttp.onreadystatechange = function(){
-				var myArr = [];
-				if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-					scene.updateMatrixWorld();
-					myArr = JSON.parse(xmlhttp.responseText);
-					drone.translateY(-oldY);
-					oldY = myArr.demo.altitude * 4;
-					drone.translateY(oldY);
-				}
-			};
-			xmlhttp.open("GET", url, true);
-			xmlhttp.send();
-		};
-		var render = function (){
-			var t = clock.getElapsedTime();
-			controls.update(clock.getDelta());
-			requestAnimationFrame(render);
-			oculuscontrol.update(clock.getDelta());
+	
+	var render = function (){
+		var t = clock.getElapsedTime();
+		controls.update(clock.getDelta());
+		requestAnimationFrame(render);
+		oculuscontrol.update(clock.getDelta());
 			// renderer.render(scene, camera);
 			effect.render(scene, camera);
 		};
-		var isUpdating = false;
-		var updatingId;
-		var startUpdating = function(){
-			if (isUpdating == false)
-				updatingId = setInterval(httpGet, 50);
-			else clearInterval(updatingId);
-			isUpdating = !isUpdating;
-		};
 		/////////////////////////
 		/////////////////////////
-		httpGet();
+		// httpGet();
 		render();
 	});	

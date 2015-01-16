@@ -32,7 +32,7 @@ router.use(function(req, res, next){
 console.log('Setting up routes for API...');
 require('./api/routes')(droneSocket, app, router);
 
-api.use('/api', router); 
+api.use('/api', router);
 api.listen(config.apiPort);
 console.log('API listening on port ' + config.apiPort);
 /////////////////////////////////////////////////////////////
