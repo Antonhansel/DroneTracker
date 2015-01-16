@@ -5,11 +5,53 @@ jQuery(function(){
 	oculuscontrol = new THREE.OculusControls(camera);
 	var clock = new THREE.Clock();
 	oculuscontrol.connect();
+
+	//////////////////////////////
+	//////////////////////////////
+	var ambient = new THREE.AmbientLight( 0x101030 );
+	scene.add( ambient );
+	var directionalLight = new THREE.DirectionalLight( 0xffeedd );
+	directionalLight.position.set( 0, 0, 1 );
+	scene.add( directionalLight );
 	renderer.setSize(window.innerWidth, window.innerHeight);
 	/////////////////////////////
 	/////////////////////////////
+	var manager = new THREE.LoadingManager();
+	manager.onProgress = function ( item, loaded, total ) {
+		console.log(item, loaded, total);
+	};
+	var texture = new THREE.Texture();
+	var onProgress = function(xhr){
+		if (xhr.lengthComputable){
+			var percentComplete = xhr.loaded / xhr.total * 100;
+			console.log( Math.round(percentComplete, 2) + '% downloaded' );
+		}
+	};
+	var onError = function(xhr){
+		console.log(xhr);
+	};
+	var loader = new THREE.ImageLoader( manager );
+				loader.load('obj/UV_Grid_Sm.jpg', function (image){
+					texture.image = image;
+					texture.needsUpdate = true;
+				});
+	var loader = new THREE.OBJLoader(manager);
+	var drone;
+	loader.load('obj/MQ-27-2.obj', function(object){
+		object.traverse( function(child){
+			if (child instanceof THREE.Mesh){
+				child.material.map = texture;
+			}
+		});
+		object.position.y = 0.5;
+		object.scale.x = object.scale.y = object.scale.z = 0.01;
+		drone = object;
+		scene.add(drone);
+	}, onProgress, onError);
+	/////////////////////////////
+	/////////////////////////////
 	effect = new THREE.OculusRiftEffect(renderer, {worldScale: 1});
-	effect.setSize( window.innerWidth, window.innerHeight );
+	effect.setSize(window.innerWidth, window.innerHeight);
 
 	document.body.appendChild(renderer.domElement);
 	controls = new THREE.TrackballControls(camera, renderer.domElement);
@@ -27,11 +69,6 @@ jQuery(function(){
 	controls.maxDistance = 100;
 
 	controls.keys = [16, 17, 18];
-
-	var geometry = new THREE.BoxGeometry(1, 1, 1);
-	var material = new THREE.MeshBasicMaterial({color: 0x00ff00});
-	var cube = new THREE.Mesh(geometry, material);
-	scene.add(cube);
 
 	camera.position.z = 5;
 	var size = 10, step = 4;
@@ -56,9 +93,9 @@ jQuery(function(){
 				if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 					scene.updateMatrixWorld();
 					myArr = JSON.parse(xmlhttp.responseText);
-					cube.translateY(-oldY);
+					drone.translateY(-oldY);
 					oldY = myArr.demo.altitude * 4;
-					cube.translateY(oldY);
+					drone.translateY(oldY);
 				}
 			};
 			xmlhttp.open("GET", url, true);
@@ -84,4 +121,4 @@ jQuery(function(){
 		/////////////////////////
 		httpGet();
 		render();
-	});		
+	});	
