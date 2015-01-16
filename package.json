@@ -21,6 +21,7 @@
     "body-parser": "^1.9.0",
     "ejs": "^2.1.4",
     "express": "^4.9.7",
+    "fs": "0.0.2",
     "imagesnap": "0.0.0",
     "leapjs": "^0.6.2",
     "lodash": "^2.4.1",

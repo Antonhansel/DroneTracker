@@ -3,6 +3,7 @@
 var config 		= require('./config/config.js');
 var drone 		= require('ar-drone');
 var express 	= require('express');
+var fs 			= require('fs');
 var path 		= require('path');
 var http 		= require('http');
 var _ 			= require('lodash');
@@ -47,6 +48,11 @@ if (!config.dev){
 			if (result.length > 0) console.log(result);
 		});
 	})
+} else {
+	fs.readFile('./public/staticImage', function(err, data){
+		if (err) console.log("Error while opening image:" + err);
+		else lastFrame = data;
+	});
 }
 /////////////////////////////////////////////////////////////
 //Serving images on port 8081 for app

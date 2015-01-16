@@ -20,6 +20,15 @@ jQuery(function(){
 	renderer.setSize(window.innerWidth, window.innerHeight);
 	/////////////////////////////
 	/////////////////////////////
+	var img = new THREE.MeshBasicMaterial({ //CHANGED to MeshBasicMaterial
+        map:THREE.ImageUtils.loadTexture('../staticImage')
+    });
+    img.map.needsUpdate = true; //ADDED
+
+    // plane
+    var plane = new THREE.Mesh(new THREE.PlaneGeometry(10, 10),img);
+    plane.overdraw = true;
+    scene.add(plane);
 	var manager = new THREE.LoadingManager();
 	manager.onProgress = function ( item, loaded, total ) {
 		console.log(item, loaded, total);
