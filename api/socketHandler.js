@@ -2,7 +2,7 @@
 * @Author: antonhansel
 * @Date:   2015-01-17 10:45:39
 * @Last Modified by:   antonhansel
-* @Last Modified time: 2015-01-17 15:59:48
+* @Last Modified time: 2015-01-17 16:34:59
 */
 var speed = 1;
 
@@ -51,19 +51,19 @@ module.exports = function(droneSocket, io){
 		socket.on('up', function(){
 			console.log('Going up...');
 			droneSocket.stop();
-			droneSocket.up(0.2);
+			droneSocket.up(0.3);
 		});
 		socket.on('down', function(){
 			console.log('Going down...');
 			droneSocket.stop();
-			droneSocket.down(0.2);
+			droneSocket.down(0.3);
 		});
-		socket.on('rotateLeft', function(){
+		socket.on('rotateRight', function(){
 			console.log('Rotating left...');
 			droneSocket.stop();
 			droneSocket.counterClockwise(0.5);
 		});
-		socket.on('rotateRight', function(){
+		socket.on('rotateLeft', function(){
 			console.log('Rotating right...');
 			droneSocket.stop();
 			droneSocket.clockwise(0.5);

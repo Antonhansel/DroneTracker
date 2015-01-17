@@ -2,11 +2,11 @@ jQuery(function(){
 	var gui = new dat.GUI();
 	var parameters = 
 	{
-		a: function(){ socket.emit('land'); },
-		b: function(){ socket.emit('takeoff'); },
-		c: function(){ socket.emit('recover'); },
-		d: function(){ socket.emit('speed', {'speed' : 1})},
-		e: function(){ socket.emit('speed', {'speed' : -1})},
+		a: function(){ socket.emit('land'); renderer.domElement.focus();},
+		b: function(){ socket.emit('takeoff'); renderer.domElement.focus();},
+		c: function(){ socket.emit('recover'); renderer.domElement.focus();},
+		d: function(){ socket.emit('speed', {'speed' : 1}); renderer.domElement.focus();},
+		e: function(){ socket.emit('speed', {'speed' : -1}); renderer.domElement.focus();},
 	};
 	gui.add(parameters, 'a').name('Land');
 	gui.add(parameters, 'b').name('Take Off');

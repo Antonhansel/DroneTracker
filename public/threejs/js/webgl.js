@@ -25,6 +25,7 @@ keyboard.domElement.addEventListener('keyup', function(event){
 
 keyboard.domElement.addEventListener('keydown', function(event){
 	if (!event.repeat){
+		console.log('EVENT');
 		for (var i = 0; i < commands.length; i++){
 			if (commands[i][0] == event.which){
 				socket.emit(commands[i][1]);
