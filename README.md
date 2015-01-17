@@ -2,6 +2,8 @@
 
 DroneTracker brings your ARDrone experience to the next level! Connect to your drone's WiFi, fire up the server, plug in your OcculusRift and point your favorite browser to http://localhost:8080
 
+![alt tag](https://raw.github.com/antonhansel/DroneTracker/screen.png)
+
 DroneTracker uses a number of open source projects to work properly:
 
 * [ThreeJS] - Enhanced webgl!
