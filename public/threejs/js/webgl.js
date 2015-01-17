@@ -1,6 +1,17 @@
 var scene;
 var drone;
 var oldY = 0;
+var navData;
+
+var socket = io.connect('http://localhost:8082');
+socket.on('navdata', function(data){
+	navdata = data;
+	scene.updateMatrixWorld();
+	myArr = JSON.parse(xmlhttp.responseText);
+	drone.translateY(-oldY);
+	oldY = myArr.demo.altitude * 4;
+	drone.translateY(oldY);
+});
 
 jQuery(function(){
 	scene = new THREE.Scene();
