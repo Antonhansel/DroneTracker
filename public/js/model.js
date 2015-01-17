@@ -14,13 +14,13 @@ function initModel(){
        console.log(xhr);
     };
     var loader = new THREE.ImageLoader( manager );
-    loader.load('obj/UV_Grid_Sm.jpg', function (image){
+    loader.load('model/UV_Grid_Sm.jpg', function (image){
        texture.image = image;
        texture.needsUpdate = true;
     });
     var loader = new THREE.OBJLoader(manager);
 
-    loader.load('obj/MQ-27-2.obj', function(object){
+    loader.load('model/MQ-27-2.obj', function(object){
        object.traverse( function(child){
           if (child instanceof THREE.Mesh){
              child.material.map = texture;
