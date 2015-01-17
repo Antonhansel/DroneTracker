@@ -2,12 +2,12 @@ var scene;
 var drone;
 var oldY = 0;
 var navData;
-
-var socket = io.connect('http://localhost:3000');
+var keyboard = new THREEx.KeyboardState();
+var socket = io('http://localhost:3000');
 socket.on('navdata', function(data){
 	navdata = data;
 	scene.updateMatrixWorld();
-	myArr = JSON.parse(xmlhttp.responseText);
+	myArr = data;
 	drone.translateY(-oldY);
 	oldY = myArr.demo.altitude * 4;
 	drone.translateY(oldY);
@@ -26,7 +26,7 @@ jQuery(function(){
 	var ambient = new THREE.AmbientLight( 0x101030 );
 	scene.add(ambient);
 	var directionalLight = new THREE.DirectionalLight( 0xffeedd );
-	directionalLight.position.set( 0, 0, 1 );
+	directionalLight.position.set( 1, 0, 1 );
 	scene.add(directionalLight);
 	renderer.setSize(window.innerWidth, window.innerHeight);
 	/////////////////////////////
@@ -72,6 +72,7 @@ jQuery(function(){
 		});
 		object.position.y = 0.5;
 		object.scale.x = object.scale.y = object.scale.z = 0.01;
+		object.rotation.y = 90;
 		drone = object;
 		scene.add(drone);
 	}, onProgress, onError);
@@ -118,8 +119,5 @@ jQuery(function(){
 			// renderer.render(scene, camera);
 			effect.render(scene, camera);
 		};
-		/////////////////////////
-		/////////////////////////
-		// httpGet();
 		render();
 	});	

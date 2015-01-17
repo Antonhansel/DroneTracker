@@ -1,22 +1,20 @@
 //////////////////////////////////////////////////////////////
 //Initialize stuff
-var config 		= require('./config/config.js');
-var drone 		= require('ar-drone');
-var express 	= require('express');
-var fs 			= require('fs');
-var path 		= require('path');
-var http 		= require('http');
-var _ 			= require('lodash');
-var droneSocket = drone.createClient();
-var cmdLine 	= require('./modules/commandLine')(droneSocket);
-var detection 	= require('./modules/detection');
-var io 			= require('socket.io').listen(config.apiPort);
+var config 			= require('./config/config.js');
+var drone 			= require('ar-drone');
+var express 		= require('express');
+var fs 				= require('fs');
+var path 			= require('path');
+var http 			= require('http');
+var _ 				= require('lodash');
+var droneSocket 	= drone.createClient();
+var cmdLine 		= require('./modules/commandLine')(droneSocket);
+var detection 		= require('./modules/detection');
+var io 				= require('socket.io').listen(config.apiPort);
 /////////////////////////////////////////////////////////////
 //Socket.io stuff
+var socketHandler	= require('./api/socketHandler.js')(droneSocket, io);
 console.log('API Listening on port 3000');
-io.on('connection', function(socket){
-	console.log('User connected:' + socket);
-});
 /////////////////////////////////////////////////////////////
 //web view stuff
 var app = express();
@@ -57,6 +55,5 @@ var server = http.createServer(function(req, res){
 		res.end(lastFrame);
 	}
 });
-
 server.listen(config.imagePort);
 console.log('Serving images on port '+ config.imagePort);
