@@ -3,7 +3,7 @@ var drone;
 var oldY = 0;
 var navData;
 
-var socket = io.connect('http://localhost:8082');
+var socket = io.connect('http://localhost:3000');
 socket.on('navdata', function(data){
 	navdata = data;
 	scene.updateMatrixWorld();

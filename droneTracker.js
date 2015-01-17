@@ -10,32 +10,23 @@ var _ 			= require('lodash');
 var droneSocket = drone.createClient();
 var cmdLine 	= require('./modules/commandLine')(droneSocket);
 var detection 	= require('./modules/detection');
-
+var io 			= require('socket.io').listen(config.apiPort);
 /////////////////////////////////////////////////////////////
-//Api stuff
-var api = express();
-var router = express.Router();
-var bodyParser = require('body-parser');
+//Socket.io stuff
+console.log('API Listening on port 3000');
+io.on('connection', function(socket){
+	console.log('User connected:' + socket);
+});
 /////////////////////////////////////////////////////////////
 //web view stuff
 var app = express();
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
 app.listen(config.webPort);
-console.log('Web UI listening on port ' + config.webPort);
-
-api.use(bodyParser.json());
-router.use(function(req, res, next){
-	res.header('Access-Control-Allow-Origin', '*');
-	next();
+app.get('/', function(req, res){
+	res.render('index.ejs');
 });
-
-console.log('Setting up routes for API...');
-require('./api/routes')(droneSocket, app, router);
-
-api.use('/api', router);
-api.listen(config.apiPort);
-console.log('API listening on port ' + config.apiPort);
+console.log('Web UI listening on port ' + config.webPort);
 /////////////////////////////////////////////////////////////
 //image handling stuff
 var lastFrame;
@@ -55,7 +46,7 @@ if (!config.dev){
 	});
 }
 /////////////////////////////////////////////////////////////
-//Serving images on port 8081 for app
+//Serving images on port 8081 for app, maybe switching to socket.io soon
 var server = http.createServer(function(req, res){
 	if (!lastFrame){
 		res.writeHead(503);
