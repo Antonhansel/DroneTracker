@@ -1,4 +1,4 @@
-jQuery(function(){
+function initGui(){
 	var gui = new dat.GUI();
 	var parameters = 
 	{
@@ -14,4 +14,4 @@ jQuery(function(){
 	gui.add(parameters, 'd').name('Speed +');
 	gui.add(parameters, 'e').name('Speed -');
 	gui.open();
-});
+};
