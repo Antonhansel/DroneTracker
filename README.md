@@ -22,6 +22,9 @@ $ cd DroneTracker
 $ npm install
 $ nodemon droneTracker
 ```
+
+You can change basic configuration of the app in /config/config.js
+
 ### Development
 Want to contribute? Great! Feel free to open an issue or make a pull request!
 
