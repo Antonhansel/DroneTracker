@@ -46,7 +46,7 @@ function moveModel(){
 }
 
 function initGrid(){
-    var size = 10, step = 4;
+    var size = 10, step = 3;
     var geometry = new THREE.Geometry();
     var material = new THREE.LineBasicMaterial({color: 0xcccccc, opacity: 0.2 });
     for (var i = - size; i <= size; i += step) {

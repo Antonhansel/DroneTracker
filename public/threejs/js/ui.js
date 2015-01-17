@@ -7,11 +7,13 @@ function initGui(){
 		c: function(){ socket.emit('recover'); renderer.domElement.focus();},
 		d: function(){ socket.emit('speed', {'speed' : 1}); renderer.domElement.focus();},
 		e: function(){ socket.emit('speed', {'speed' : -1}); renderer.domElement.focus();},
+		f: function(){ oculusView = !oculusView; renderer.domElement.focus();},
 	};
 	gui.add(parameters, 'a').name('Land');
 	gui.add(parameters, 'b').name('Take Off');
 	gui.add(parameters, 'c').name('Recover');
 	gui.add(parameters, 'd').name('Speed +');
 	gui.add(parameters, 'e').name('Speed -');
+	gui.add(parameters, 'f').name('Toggle Occulus view');
 	gui.open();
 };

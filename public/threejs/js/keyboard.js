@@ -8,7 +8,6 @@ function initKeyboard(){
 					[65 , 'land'],
 					[69 , 'takeoff']];
 
-
 	renderer.domElement.setAttribute("tabIndex", "0");
 	renderer.domElement.focus();
 
