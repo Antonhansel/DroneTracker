@@ -13,8 +13,8 @@ function initModel(){
     var onError = function(xhr){
        console.log(xhr);
     };
-    var loader = new THREE.ImageLoader( manager );
-    loader.load('model/UV_Grid_Sm.jpg', function (image){
+    var loader = new THREE.ImageLoader(manager);
+    loader.load('model/UV_Grid_Sm.jpg', function(image){
        texture.image = image;
        texture.needsUpdate = true;
     });
@@ -34,19 +34,8 @@ function initModel(){
     }, onProgress, onError);
 }
 
-function moveModel(){
-    socket.on('navdata', function(data){
-        navdata = data;
-        scene.updateMatrixWorld();
-        myArr = data;
-        line.translateY(-oldY);
-        line = myArr.demo.altitude * 4;
-        line.translateY(oldY);
-    });
-}
-
 function initGrid(){
-    var size = 10, step = 3;
+    var size = 10, step = 0.5;
     var geometry = new THREE.Geometry();
     var material = new THREE.LineBasicMaterial({color: 0xcccccc, opacity: 0.2 });
     for (var i = - size; i <= size; i += step) {
@@ -58,6 +47,7 @@ function initGrid(){
     line = new THREE.Line(geometry, material, THREE.LinePieces);
     scene.add(line);
 }
+
 function initPlane(){
     var img = new THREE.MeshBasicMaterial({ //CHANGED to MeshBasicMaterial
         map:THREE.ImageUtils.loadTexture('../staticImage.jpg')

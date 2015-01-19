@@ -15,7 +15,7 @@ var keyboard	= new THREEx.KeyboardState(renderer.domElement);
 jQuery(function(){
 	//////////////////////////////
 	///////// PREPARE DAT ////////
-   	function render(){
+	function render(){
 		var t = clock.getElapsedTime();
 		controls.update(clock.getDelta());
 		requestAnimationFrame(render);
@@ -26,13 +26,21 @@ jQuery(function(){
 	//////////////////////////////
 	///////// INIT DIS ///////////
 	initKeyboard();
-   	initModel();
-   	initPlane();
-   	initLights();
+	initModel();
+	initPlane();
+	initLights();
 	initCamera();
 	initGrid();
 	initGui();
 	//////////////////////////////
 	///////// RENDER DAT /////////
 	render();
+	socket.on('navdata', function(data){
+		navdata = data;
+		scene.updateMatrixWorld();
+		myArr = data;
+		line.translateY(-oldY);
+		oldY = -myArr.demo.altitude * 4;
+		line.translateY(oldY);
+	});
 });
