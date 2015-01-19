@@ -58,6 +58,6 @@ function initPlane(){
     imgDisplay.position.z = -2;
     imgDisplay.position.y = -1;
     imgDisplay.rotation.x = -0.5;
-    //imgDisplay.overdraw = true;
+    imgDisplay.overdraw = true;
     scene.add(imgDisplay);
 }

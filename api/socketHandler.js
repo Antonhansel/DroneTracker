@@ -2,9 +2,10 @@
 * @Author: antonhansel
 * @Date:   2015-01-17 10:45:39
 * @Last Modified by:   antonhansel
-* @Last Modified time: 2015-01-19 15:10:03
+* @Last Modified time: 2015-01-19 17:25:53
 */
 var speed = 1;
+var detection 		= require('../modules/detection');
 var config = require('../config/config.js');
 
 module.exports = function(droneSocket, io){
@@ -15,12 +16,11 @@ module.exports = function(droneSocket, io){
 		if (!config.dev){
 			var pngStream = droneSocket.getPngStream();
 			pngStream.on('error', console.error).on('data', function(pngBuffer){
-				//lastFrame = pngBuffer;
 				socket.emit('frame', pngBuffer.toString('base64'));
-		// detection.matrixHandler(pngBuffer, function(result){
-		// 	if (result.length > 0) console.log(result);
-		// });
-		})
+				// detection.matrixHandler(pngBuffer, function(result){
+				// 	if (result.length > 0) console.log(result);
+				// });
+			});
 		} else {
 			fs.readFile('./public/staticImage.jpg', function(err, data){
 				if (err) console.log("Error while opening image:" + err);

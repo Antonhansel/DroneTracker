@@ -2,8 +2,8 @@ var cv = require('opencv');
 
 var detectFace = function(image, callback){
 	image.detectObject(cv.FACE_CASCADE, {}, function(err, faces){
-			callback(faces);
-	});	
+		callback(faces);
+	});
 }
 
 var detectBody = function(image, callback){

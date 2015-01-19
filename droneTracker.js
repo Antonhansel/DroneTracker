@@ -9,7 +9,6 @@ var http 			= require('http');
 var _ 				= require('lodash');
 var droneSocket 	= drone.createClient();
 var cmdLine 		= require('./modules/commandLine')(droneSocket);
-var detection 		= require('./modules/detection');
 var io 				= require('socket.io').listen(config.apiPort);
 /////////////////////////////////////////////////////////////
 //Socket.io stuff
@@ -25,17 +24,3 @@ app.get('/', function(req, res){
 	res.render('index.ejs');
 });
 console.log('Web UI listening on port ' + config.webPort);
-/////////////////////////////////////////////////////////////
-//Serving images on port 8081 for app, maybe switching to socket.io soon
-var server = http.createServer(function(req, res){
-	if (!lastFrame){
-		res.writeHead(503);
-		res.end('No data yet, keep waiting');
-	}
-	else{
-		res.writeHead(200, {'Content-Type:': 'image/png'});
-		res.end(lastFrame);
-	}
-});
-server.listen(config.imagePort);
-console.log('Serving images on port '+ config.imagePort);

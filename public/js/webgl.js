@@ -11,7 +11,7 @@ var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeigh
 var renderer = new THREE.WebGLRenderer();
 document.body.appendChild(renderer.domElement);
 var socket = io('http://localhost:3000');
-var keyboard	= new THREEx.KeyboardState(renderer.domElement);
+var keyboard = new THREEx.KeyboardState(renderer.domElement);
 
 jQuery(function(){
 	//////////////////////////////
@@ -45,8 +45,7 @@ jQuery(function(){
 		line.translateY(oldY);
 	});
 	socket.on('frame', function(data){
-		//lastFrame = data;
-		// imgDisplay.material.map = new THREE.ImageUtils.loadTexture('data:image/png;base64,' + data);
+		imgDisplay.material.map = new THREE.ImageUtils.loadTexture('data:image/png;base64,' + data);
 		imgDisplay.material.map.needsUpdate = true;
 	});
 });
