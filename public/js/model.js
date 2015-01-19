@@ -39,9 +39,9 @@ function moveModel(){
         navdata = data;
         scene.updateMatrixWorld();
         myArr = data;
-        drone.translateY(-oldY);
-        oldY = myArr.demo.altitude * 4;
-        drone.translateY(oldY);
+        line.translateY(-oldY);
+        line = myArr.demo.altitude * 4;
+        line.translateY(oldY);
     });
 }
 
@@ -55,7 +55,7 @@ function initGrid(){
         geometry.vertices.push(new THREE.Vector3(i, 0, -size));
         geometry.vertices.push(new THREE.Vector3(i, 0, size));
     }
-    var line = new THREE.Line(geometry, material, THREE.LinePieces);
+    line = new THREE.Line(geometry, material, THREE.LinePieces);
     scene.add(line);
 }
 function initPlane(){

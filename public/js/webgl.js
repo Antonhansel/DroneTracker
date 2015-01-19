@@ -1,5 +1,6 @@
 var scene = new THREE.Scene();
 var drone;
+var line;
 var oldY = 0;
 var navData;
 var oculusView = false;
@@ -13,7 +14,7 @@ var keyboard	= new THREEx.KeyboardState(renderer.domElement);
 
 jQuery(function(){
 	//////////////////////////////
-	///////// PREPARE DAT
+	///////// PREPARE DAT ////////
    	function render(){
 		var t = clock.getElapsedTime();
 		controls.update(clock.getDelta());
@@ -23,7 +24,7 @@ jQuery(function(){
 		else renderer.render(scene, camera);
 	};
 	//////////////////////////////
-	///////// INIT DIS
+	///////// INIT DIS ///////////
 	initKeyboard();
    	initModel();
    	initPlane();
@@ -31,7 +32,7 @@ jQuery(function(){
 	initCamera();
 	initGrid();
 	initGui();
-	render();
 	//////////////////////////////
-	///////// RENDER DAT
-});	
+	///////// RENDER DAT /////////
+	render();
+});

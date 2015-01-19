@@ -37,4 +37,3 @@ MIT
 [jQuery]:http://jquery.com
 [SocketIO]:http://socket.io/
 [Node-Ar-Drone]:https://github.com/felixge/node-ar-drone
-
