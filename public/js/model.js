@@ -1,6 +1,6 @@
 function initModel(){
     var manager = new THREE.LoadingManager();
-    manager.onProgress = function ( item, loaded, total ) {
+    manager.onProgress = function(item, loaded, total){
        console.log(item, loaded, total);
     };
     var texture = new THREE.Texture();

@@ -11,8 +11,6 @@ document.body.appendChild(renderer.domElement);
 var socket = io('http://localhost:3000');
 var keyboard	= new THREEx.KeyboardState(renderer.domElement);
 
-//////////////////////////////
-//////////////////////////////
 jQuery(function(){
 	//////////////////////////////
 	///////// PREPARE DAT

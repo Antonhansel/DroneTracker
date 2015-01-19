@@ -38,7 +38,7 @@ if (!config.dev){
 		});
 	})
 } else {
-	fs.readFile('./public/staticImage', function(err, data){
+	fs.readFile('./public/staticImage.jpg', function(err, data){
 		if (err) console.log("Error while opening image:" + err);
 		else lastFrame = data;
 	});
