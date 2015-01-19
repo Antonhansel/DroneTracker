@@ -2,12 +2,31 @@
 * @Author: antonhansel
 * @Date:   2015-01-17 10:45:39
 * @Last Modified by:   antonhansel
-* @Last Modified time: 2015-01-19 13:55:22
+* @Last Modified time: 2015-01-19 15:10:03
 */
 var speed = 1;
+var config = require('../config/config.js');
 
 module.exports = function(droneSocket, io){
 	io.on('connection', function(socket){
+		/////////////////////////////////////////////////////////////
+		//image handling stuff
+		var lastFrame;
+		if (!config.dev){
+			var pngStream = droneSocket.getPngStream();
+			pngStream.on('error', console.error).on('data', function(pngBuffer){
+				//lastFrame = pngBuffer;
+				socket.emit('frame', pngBuffer.toString('base64'));
+		// detection.matrixHandler(pngBuffer, function(result){
+		// 	if (result.length > 0) console.log(result);
+		// });
+		})
+		} else {
+			fs.readFile('./public/staticImage.jpg', function(err, data){
+				if (err) console.log("Error while opening image:" + err);
+				else lastFrame = data;
+			});
+		}
 		console.log('Web view connected');
 			var lastData = "none";
 		droneSocket.on('navdata', function(navdata){

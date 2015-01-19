@@ -38,7 +38,7 @@ function initGrid(){
     var size = 10, step = 0.5;
     var geometry = new THREE.Geometry();
     var material = new THREE.LineBasicMaterial({color: 0xcccccc, opacity: 0.2 });
-    for (var i = - size; i <= size; i += step) {
+    for (var i = -size; i <= size; i += step) {
         geometry.vertices.push(new THREE.Vector3(-size, 0, i));
         geometry.vertices.push(new THREE.Vector3(size, 0, i));
         geometry.vertices.push(new THREE.Vector3(i, 0, -size));
@@ -49,12 +49,12 @@ function initGrid(){
 }
 
 function initPlane(){
-    var img = new THREE.MeshBasicMaterial({ //CHANGED to MeshBasicMaterial
+    img = new THREE.MeshBasicMaterial({
         map:THREE.ImageUtils.loadTexture('../staticImage.jpg')
     });
-    //img.map.needsUpdate = true; //ADDED
+    // img.map.needsUpdate = true;
     // plane
-    var imgDisplay = new THREE.Mesh(new THREE.PlaneBufferGeometry(640/30, 360/30), img);
+    imgDisplay = new THREE.Mesh(new THREE.PlaneBufferGeometry(640/30, 360/30), img);
     imgDisplay.position.z = -2;
     imgDisplay.position.y = -1;
     imgDisplay.rotation.x = -0.5;

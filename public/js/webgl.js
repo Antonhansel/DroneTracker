@@ -2,8 +2,9 @@ var scene = new THREE.Scene();
 var drone;
 var line;
 var oldY = 0;
+var imgDisplay;
 var navData;
-var oculusView = false;
+var oculusView = true;
 var effect;
 var clock = new THREE.Clock();
 var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
@@ -42,5 +43,10 @@ jQuery(function(){
 		line.translateY(-oldY);
 		oldY = -myArr.demo.altitude * 4;
 		line.translateY(oldY);
+	});
+	socket.on('frame', function(data){
+		//lastFrame = data;
+		// imgDisplay.material.map = new THREE.ImageUtils.loadTexture('data:image/png;base64,' + data);
+		imgDisplay.material.map.needsUpdate = true;
 	});
 });

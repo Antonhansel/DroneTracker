@@ -26,24 +26,6 @@ app.get('/', function(req, res){
 });
 console.log('Web UI listening on port ' + config.webPort);
 /////////////////////////////////////////////////////////////
-//image handling stuff
-var lastFrame;
-if (!config.dev){
-	var pngStream = droneSocket.getPngStream();
-
-	pngStream.on('error', console.error).on('data', function(pngBuffer){
-		lastFrame = pngBuffer;
-		detection.matrixHandler(pngBuffer, function(result){
-			if (result.length > 0) console.log(result);
-		});
-	})
-} else {
-	fs.readFile('./public/staticImage.jpg', function(err, data){
-		if (err) console.log("Error while opening image:" + err);
-		else lastFrame = data;
-	});
-}
-/////////////////////////////////////////////////////////////
 //Serving images on port 8081 for app, maybe switching to socket.io soon
 var server = http.createServer(function(req, res){
 	if (!lastFrame){
