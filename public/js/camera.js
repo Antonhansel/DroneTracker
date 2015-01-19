@@ -17,9 +17,9 @@ function initCamera(){
 
 	controls.keys = [16, 17, 18];
 
-	camera.position.z = 5;
-	camera.position.y = 7;
-	camera.position.x = 5;
+	camera.position.z = 10;
+	camera.position.y = 6;
+	camera.position.x = 0;
 	effect = new THREE.OculusRiftEffect(renderer, {worldScale: 1});
 	effect.setSize(window.innerWidth, window.innerHeight);
 }

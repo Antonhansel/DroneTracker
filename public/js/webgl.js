@@ -2,7 +2,7 @@ var scene = new THREE.Scene();
 var drone;
 var oldY = 0;
 var navData;
-var oculusView = true;
+var oculusView = false;
 var effect;
 var clock = new THREE.Clock();
 var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
@@ -28,6 +28,7 @@ jQuery(function(){
 	///////// INIT DIS
 	initKeyboard();
    	initModel();
+   	initPlane();
    	initLights();
 	initCamera();
 	initGrid();

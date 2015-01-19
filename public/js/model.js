@@ -28,7 +28,7 @@ function initModel(){
      });
        object.position.y = 0.5;
        object.scale.x = object.scale.y = object.scale.z = 0.01;
-       object.rotation.y = 90;
+       object.rotation.y = -4.7;
        drone = object;
        scene.add(drone);
     }, onProgress, onError);
@@ -60,11 +60,14 @@ function initGrid(){
 }
 function initPlane(){
     var img = new THREE.MeshBasicMaterial({ //CHANGED to MeshBasicMaterial
-        map:THREE.ImageUtils.loadTexture('../staticImage')
+        map:THREE.ImageUtils.loadTexture('../staticImage.jpg')
     });
     //img.map.needsUpdate = true; //ADDED
     // plane
-    var imgDisplay = new THREE.Mesh(new THREE.PlaneGeometry(10, 10), img);
+    var imgDisplay = new THREE.Mesh(new THREE.PlaneBufferGeometry(640/30, 360/30), img);
+    imgDisplay.position.z = -2;
+    imgDisplay.position.y = -1;
+    imgDisplay.rotation.x = -0.5;
     //imgDisplay.overdraw = true;
-    //scene.add(imgDisplay);
+    scene.add(imgDisplay);
 }
