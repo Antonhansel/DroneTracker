@@ -49,6 +49,8 @@ Sent as:
 socket.emit(command);
 ```
 
+__After sending a command, the drone will not stop moving until you send the command stop.__
+
 Change speed:
 
 ```sh
