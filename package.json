@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Antonhansel/DroneTracker",
   "dependencies": {
+    "nan": "^1.4.3",
     "ar-drone": "^0.3.3",
     "body-parser": "^1.9.0",
     "ejs": "^2.1.4",
