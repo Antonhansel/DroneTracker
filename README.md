@@ -30,7 +30,9 @@ Want to contribute? Great! Feel free to open an issue or make a pull request!
 
 ### API
 The API is a socket.io server listening on port 3000.
+
 Making a smartphone app? No problem, for iOS use [SIOSocket], for Android [Socket.IO-java]
+
 Open a socket.io connexion to send and recieve data:
 
 **Sending orders**
@@ -41,11 +43,15 @@ land, takeoff, forward, backward, up, down, rotateLeft, rotateRight, stop and re
 
 Sent as:
 
-```socket.emit(command);```
+```sh
+socket.emit(command);
+```
 
 Change speed:
 
-```socket.emit('speed', speed); //send -1 to go slower, 1 to go faster```
+```sh
+socket.emit('speed', speed); //send -1 to go slower, 1 to go faster
+```
 
 **Recieving data***
 
