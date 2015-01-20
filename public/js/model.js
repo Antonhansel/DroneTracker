@@ -49,15 +49,13 @@ function initGrid(){
 }
 
 function initPlane(){
-    img = new THREE.MeshBasicMaterial({
+    lastFrame = new THREE.MeshBasicMaterial({
         map:THREE.ImageUtils.loadTexture('../staticImage.jpg')
     });
-    // img.map.needsUpdate = true;
     // plane
-    imgDisplay = new THREE.Mesh(new THREE.PlaneBufferGeometry(640/30, 360/30), img);
-    imgDisplay.position.z = -2;
-    imgDisplay.position.y = -1;
+    imgDisplay = new THREE.Mesh(new THREE.PlaneBufferGeometry(640/30, 360/30), lastFrame);
+    imgDisplay.position.z = -5;
+    imgDisplay.position.y = 5;
     imgDisplay.rotation.x = -0.5;
-    imgDisplay.overdraw = true;
     scene.add(imgDisplay);
 }

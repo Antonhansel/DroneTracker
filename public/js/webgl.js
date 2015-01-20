@@ -4,6 +4,7 @@ var line;
 var oldY = 0;
 var imgDisplay;
 var navData;
+var lastFrame;
 var oculusView = true;
 var effect;
 var clock = new THREE.Clock();
@@ -17,12 +18,16 @@ jQuery(function(){
 	//////////////////////////////
 	///////// PREPARE DAT ////////
 	function render(){
-		var t = clock.getElapsedTime();
-		controls.update(clock.getDelta());
+		// var t = clock.getElapsedTime();
 		requestAnimationFrame(render);
-		oculuscontrol.update(clock.getDelta());
-		if (oculusView) effect.render(scene, camera);
-		else renderer.render(scene, camera);
+		controls.update(clock.getDelta());
+//		oculuscontrol.update(clock.getDelta());
+		if (oculusView) 
+			effect.render(scene, camera);
+		else 
+			renderer.render(scene, camera);
+		imgDisplay.material.map = new THREE.ImageUtils.loadTexture('data:image/png;base64,' + lastFrame);
+
 	};
 	//////////////////////////////
 	///////// INIT DIS ///////////
@@ -38,14 +43,15 @@ jQuery(function(){
 	render();
 	socket.on('navdata', function(data){
 		navdata = data;
-		scene.updateMatrixWorld();
+		//scene.updateMatrixWorld();
 		myArr = data;
 		line.translateY(-oldY);
 		oldY = -myArr.demo.altitude * 4;
 		line.translateY(oldY);
 	});
 	socket.on('frame', function(data){
-		imgDisplay.material.map = new THREE.ImageUtils.loadTexture('data:image/png;base64,' + data);
-		imgDisplay.material.map.needsUpdate = true;
+		lastFrame = data;
+		// imgDisplay.overdraw = true;
+		// imgDisplay.material.map.needsUpdate = true;
 	});
 });

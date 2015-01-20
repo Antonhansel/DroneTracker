@@ -20,6 +20,6 @@ function initCamera(){
 	camera.position.z = 10;
 	camera.position.y = 6;
 	camera.position.x = 0;
-	effect = new THREE.OculusRiftEffect(renderer, {worldScale: 1});
+	effect = new THREE.OculusRiftEffect(renderer, {worldScale: 100});
 	effect.setSize(window.innerWidth, window.innerHeight);
 }
