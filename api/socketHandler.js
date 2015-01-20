@@ -2,11 +2,11 @@
 * @Author: antonhansel
 * @Date:   2015-01-17 10:45:39
 * @Last Modified by:   antonhansel
-* @Last Modified time: 2015-01-19 17:25:53
+* @Last Modified time: 2015-01-20 13:00:56
 */
-var speed = 1;
-var detection 		= require('../modules/detection');
-var config = require('../config/config.js');
+var speed = 2;
+//var detection 		= require('../modules/detection');
+var config 			= require('../config/config.js');
 
 module.exports = function(droneSocket, io){
 	io.on('connection', function(socket){
@@ -20,11 +20,6 @@ module.exports = function(droneSocket, io){
 				// detection.matrixHandler(pngBuffer, function(result){
 				// 	if (result.length > 0) console.log(result);
 				// });
-			});
-		} else {
-			fs.readFile('./public/staticImage.jpg', function(err, data){
-				if (err) console.log("Error while opening image:" + err);
-				else lastFrame = data;
 			});
 		}
 		console.log('Web view connected');

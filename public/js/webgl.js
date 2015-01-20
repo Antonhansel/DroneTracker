@@ -5,6 +5,7 @@ var oldY = 0;
 var imgDisplay;
 var navData;
 var lastFrame;
+var newFrame = false;
 var oculusView = true;
 var effect;
 var clock = new THREE.Clock();
@@ -26,7 +27,10 @@ jQuery(function(){
 			effect.render(scene, camera);
 		else 
 			renderer.render(scene, camera);
-		imgDisplay.material.map = new THREE.ImageUtils.loadTexture('data:image/png;base64,' + lastFrame);
+		if (newFrame){
+			imgDisplay.material.map = new THREE.ImageUtils.loadTexture('data:image/png;base64,' + lastFrame);
+			newFrame = false;
+		}
 
 	};
 	//////////////////////////////
@@ -51,6 +55,7 @@ jQuery(function(){
 	});
 	socket.on('frame', function(data){
 		lastFrame = data;
+		newFrame = true;
 		// imgDisplay.overdraw = true;
 		// imgDisplay.material.map.needsUpdate = true;
 	});
