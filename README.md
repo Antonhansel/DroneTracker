@@ -36,8 +36,8 @@ Open a socket.io connexion to send and recieve data:
 **Sending orders**
 
 Basic commands available:
-	
-	land, takeoff, forward, backward, up, down, rotateLeft, rotateRight, stop and recover (Send this after a crash when LEDs are red).
+
+land, takeoff, forward, backward, up, down, rotateLeft, rotateRight, stop and recover (Send this after a crash when LEDs are red).
 
 Sent as:
 
