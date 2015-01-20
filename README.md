@@ -34,14 +34,21 @@ Making a smartphone app? No problem, for iOS use [SIOSocket], for Android [Socke
 Open a socket.io connexion to send and recieve data:
 
 **Sending orders**
+
 Basic commands available:
-	land, takeoff, forward, backward, up, down, rotateLeft, rotateRight, stop and recover (Send this after a crash when LEDs are red)
+	
+	land, takeoff, forward, backward, up, down, rotateLeft, rotateRight, stop and recover (Send this after a crash when LEDs are red).
+
 Sent as:
+
 ```socket.emit(command);```
+
 Change speed:
+
 ```socket.emit('speed', speed); //send -1 to go slower, 1 to go faster```
 
 **Recieving data***
+
 Upon recieving 'navdata' event, the socket data will contain a navigation data object.
 Upon recieving 'frame' event, the socket data will contain a raw png buffer showing the front camera view. Add 'data:image/png;base64,' at the begining to display it in a browser for example.
 
