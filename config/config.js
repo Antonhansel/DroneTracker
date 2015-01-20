@@ -3,5 +3,5 @@ module.exports = {
   "apiPort"     : 3000,
   "imagePort"   : 8081,
   "webPort"		: 8080,
-  "dev"			: false,
+  "dev"			: true,
 }

@@ -2,7 +2,7 @@
 * @Author: antonhansel
 * @Date:   2015-01-17 10:45:39
 * @Last Modified by:   antonhansel
-* @Last Modified time: 2015-01-20 13:00:56
+* @Last Modified time: 2015-01-20 14:41:59
 */
 var speed = 2;
 //var detection 		= require('../modules/detection');
@@ -26,7 +26,8 @@ module.exports = function(droneSocket, io){
 			var lastData = "none";
 		droneSocket.on('navdata', function(navdata){
 			lastData = navdata;
-			socket.emit('navdata', navdata)
+			socket.emit('navdata', navdata);
+			console.log(navdata);
 		});
 		socket.on('speed', function(data){
 			if ((speed + data.speed) > -1 && (speed + data.speed) < 11){
@@ -85,7 +86,6 @@ module.exports = function(droneSocket, io){
 		socket.on('stop', function(){
 			console.log('Stop...');
 			droneSocket.stop();
-			droneSocket.up(0.2);
 		});
 	});
 }

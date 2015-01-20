@@ -3,10 +3,11 @@ var drone;
 var line;
 var oldY = 0;
 var imgDisplay;
-var navData;
+var navData = 0;
 var lastFrame;
 var newFrame = false;
-var oculusView = true;
+var newData = false;
+var oculusView = false;
 var effect;
 var clock = new THREE.Clock();
 var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
@@ -31,7 +32,14 @@ jQuery(function(){
 			imgDisplay.material.map = new THREE.ImageUtils.loadTexture('data:image/png;base64,' + lastFrame);
 			newFrame = false;
 		}
-
+		if (newData) {
+			// //scene.updateMatrixWorld();
+			line.translateY(navData.demo.altitude * 4);
+			line.translateY(-data.demo.altitude * 4);
+			drone.rotation.x = data.demo.frontBackDegrees / 50;
+			drone.rotation.z = data.demo.leftRightDegrees / 50;
+			newData = false;
+		}
 	};
 	//////////////////////////////
 	///////// INIT DIS ///////////
@@ -46,16 +54,20 @@ jQuery(function(){
 	///////// RENDER DAT /////////
 	render();
 	socket.on('navdata', function(data){
-		navdata = data;
-		//scene.updateMatrixWorld();
-		myArr = data;
-		line.translateY(-oldY);
-		oldY = -myArr.demo.altitude * 4;
-		line.translateY(oldY);
+		if (!newData && navData != 0){
+			newData = true;
+			navData = data;
+		} else if (navData == 0){
+			//first run of the api
+			navData = data;
+			newData = true;
+		}
 	});
 	socket.on('frame', function(data){
-		lastFrame = data;
-		newFrame = true;
+		if (!newFrame){
+			lastFrame = data;
+			newFrame = true;
+		}
 		// imgDisplay.overdraw = true;
 		// imgDisplay.material.map.needsUpdate = true;
 	});
