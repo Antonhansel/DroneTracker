@@ -35,7 +35,9 @@ Making a smartphone app? No problem, for iOS use [SIOSocket], for Android [Socke
 
 Open a socket.io connexion to send orders and recieve data:
 
-**Sending orders**
+****
+
+***Sending orders***
 
 Basic commands available:
 
