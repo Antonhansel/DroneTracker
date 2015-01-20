@@ -28,9 +28,29 @@ You can change basic configuration of the app in /config/config.js
 ### Development
 Want to contribute? Great! Feel free to open an issue or make a pull request!
 
+### API
+The API is a socket.io server listening on port 3000.
+Making a smartphone app? No problem, for iOS use [SIOSocket], for Android [Socket.IO-java]
+Open a socket.io connexion to send and recieve data:
+
+**Sending orders**
+Basic commands available:
+	land, takeoff, forward, backward, up, down, rotateLeft, rotateRight, stop and recover (Send this after a crash when LEDs are red)
+Sent as:
+```socket.emit(command);```
+Change speed:
+```socket.emit('speed', speed); //send -1 to go slower, 1 to go faster```
+
+**Recieving data***
+Upon recieving 'navdata' event, the socket data will contain a navigation data object.
+Upon recieving 'frame' event, the socket data will contain a raw png buffer showing the front camera view. Add 'data:image/png;base64,' at the begining to display it in a browser for example.
+
+
 License
 ----
 MIT
+[SIOSocket]:https://github.com/MegaBits/SIOSocket
+[Socket.IO-java]:https://github.com/nkzawa/socket.io-client.java
 [Felixge]:https://github.com/felixge
 [ThreeJS]:http://threejs.org/
 [node.js]:http://nodejs.org
