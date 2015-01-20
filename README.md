@@ -33,7 +33,7 @@ The API is a socket.io server listening on port 3000.
 
 Making a smartphone app? No problem, for iOS use [SIOSocket], for Android [Socket.IO-java]
 
-Open a socket.io connexion to send and recieve data:
+Open a socket.io connexion to send orders and recieve data:
 
 **Sending orders**
 
@@ -53,7 +53,7 @@ Change speed:
 socket.emit('speed', speed); //send -1 to go slower, 1 to go faster
 ```
 
-**Recieving data***
+***Recieving data***
 
 Upon recieving 'navdata' event, the socket data will contain a navigation data object.
 
