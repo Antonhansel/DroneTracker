@@ -56,7 +56,10 @@ socket.emit('speed', speed); //send -1 to go slower, 1 to go faster
 **Recieving data***
 
 Upon recieving 'navdata' event, the socket data will contain a navigation data object.
-Upon recieving 'frame' event, the socket data will contain a raw png buffer showing the front camera view. Add 'data:image/png;base64,' at the begining to display it in a browser for example.
+
+Upon recieving 'frame' event, the socket data will contain a raw png buffer showing the front camera view. 
+
+Add 'data:image/png;base64,' at the begining to display it in a browser for example.
 
 
 License
