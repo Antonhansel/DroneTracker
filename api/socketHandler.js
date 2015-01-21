@@ -2,10 +2,14 @@
 * @Author: antonhansel
 * @Date:   2015-01-17 10:45:39
 * @Last Modified by:   antonhansel
-* @Last Modified time: 2015-01-21 11:22:02
+* @Last Modified time: 2015-01-21 14:04:09
 */
 var speed = 2;
 var fs = require('fs');
+// var write = false;
+// var file = fs.createWriteStream('./config/fakeNavData.txt');
+var navigationData = [];
+var index = 0;
 //var detection 		= require('../modules/detection');
 var config 			= require('../config/config.js');
 
@@ -24,11 +28,40 @@ module.exports = function(droneSocket, io){
 				// });
 			});
 		}
+		// droneSocket.on('navdata', function(navdata){
+		// 	if (navigationData.length < 150){
+		// 		navigationData.push(navdata);
+		// 	} else if (write == false){
+		// 		write = true;
+		// 		navigationData.forEach(function(line){
+		// 			file.write(JSON.stringify(line) + '\n');
+		// 		});
+		// 	}
+		// });
 		/////////////////////////////////////////////////////////////
 		//Navdata handler
-		droneSocket.on('navdata', function(navdata){
-			socket.emit('navdata', navdata);
-		});
+		if (!config.dev){
+			droneSocket.on('navdata', function(navdata){
+				socket.emit('navdata', navdata);
+			});
+		} else {
+			if (navigationData.length == 0){
+				fs.readFile('./config/test.txt', function(err, data){
+					if (err) console.log('Error when opening fake data file: ' + err);
+					else {
+						data.toString().split('\n').forEach(function(line){
+							navigationData.push(JSON.parse(line));
+						});
+					}
+				});
+			} else {
+				setInterval(function(data){ 
+				if (index > navigationData.length) index = 0;
+				else index++;
+				socket.emit('navdata', navigationData[index]);
+				}, 50);
+			}
+		}
 		/////////////////////////////////////////////////////////////
 		//Other commands
 		socket.on('speed', function(data){
