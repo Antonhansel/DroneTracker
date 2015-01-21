@@ -2,19 +2,21 @@
 * @Author: antonhansel
 * @Date:   2015-01-17 10:45:39
 * @Last Modified by:   antonhansel
-* @Last Modified time: 2015-01-20 14:41:59
+* @Last Modified time: 2015-01-21 11:22:02
 */
 var speed = 2;
+var fs = require('fs');
 //var detection 		= require('../modules/detection');
 var config 			= require('../config/config.js');
 
 module.exports = function(droneSocket, io){
+	if (!config.dev) var pngStream = droneSocket.getPngStream();
 	io.on('connection', function(socket){
+		console.log('Socket connected');
 		/////////////////////////////////////////////////////////////
 		//image handling stuff
 		var lastFrame;
 		if (!config.dev){
-			var pngStream = droneSocket.getPngStream();
 			pngStream.on('error', console.error).on('data', function(pngBuffer){
 				socket.emit('frame', pngBuffer.toString('base64'));
 				// detection.matrixHandler(pngBuffer, function(result){
@@ -22,13 +24,13 @@ module.exports = function(droneSocket, io){
 				// });
 			});
 		}
-		console.log('Web view connected');
-			var lastData = "none";
+		/////////////////////////////////////////////////////////////
+		//Navdata handler
 		droneSocket.on('navdata', function(navdata){
-			lastData = navdata;
 			socket.emit('navdata', navdata);
-			console.log(navdata);
 		});
+		/////////////////////////////////////////////////////////////
+		//Other commands
 		socket.on('speed', function(data){
 			if ((speed + data.speed) > -1 && (speed + data.speed) < 11){
 				speed += data.speed;

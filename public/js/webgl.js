@@ -32,14 +32,10 @@ jQuery(function(){
 			imgDisplay.material.map = new THREE.ImageUtils.loadTexture('data:image/png;base64,' + lastFrame);
 			newFrame = false;
 		}
-		if (newData) {
-			// //scene.updateMatrixWorld();
-			line.translateY(navData.demo.altitude * 4);
-			line.translateY(-data.demo.altitude * 4);
-			drone.rotation.x = data.demo.frontBackDegrees / 50;
-			drone.rotation.z = data.demo.leftRightDegrees / 50;
+		// if (newData) {
+		// 	// //scene.updateMatrixWorld();
 			newData = false;
-		}
+		// }
 	};
 	//////////////////////////////
 	///////// INIT DIS ///////////
@@ -56,6 +52,11 @@ jQuery(function(){
 	socket.on('navdata', function(data){
 		if (!newData && navData != 0){
 			newData = true;
+			line.translateY(navData.demo.altitude * 4);
+			line.translateY(-data.demo.altitude * 4);
+			drone.rotation.x = data.demo.frontBackDegrees / 50;
+			drone.rotation.z = data.demo.leftRightDegrees / 50;
+
 			navData = data;
 		} else if (navData == 0){
 			//first run of the api

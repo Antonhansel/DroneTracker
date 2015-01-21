@@ -24,3 +24,4 @@ app.get('/', function(req, res){
 	res.render('index.ejs');
 });
 console.log('Web UI listening on port ' + config.webPort);
+	
