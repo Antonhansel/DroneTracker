@@ -23,7 +23,7 @@ jQuery(function(){
 		// var t = clock.getElapsedTime();
 		requestAnimationFrame(render);
 		controls.update(clock.getDelta());
-//		oculuscontrol.update(clock.getDelta());
+		// oculuscontrol.update(clock.getDelta());
 		if (oculusView) 
 			effect.render(scene, camera);
 		else 
@@ -34,7 +34,7 @@ jQuery(function(){
 		}
 		// if (newData) {
 		// 	// //scene.updateMatrixWorld();
-			newData = false;
+		newData = false;
 		// }
 	};
 	//////////////////////////////
