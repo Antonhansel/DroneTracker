@@ -26,9 +26,9 @@ function initModel(){
              child.material.map = texture;
          }
      });
-       object.position.y = 0.5;
+       //object.position.y = 0.5;
        object.scale.x = object.scale.y = object.scale.z = 0.01;
-       object.rotation.y = -4.7;
+       //object.rotation.y = -4.7;
        drone = object;
        scene.add(drone);
     }, onProgress, onError);

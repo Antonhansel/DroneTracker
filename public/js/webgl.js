@@ -34,7 +34,7 @@ jQuery(function(){
 		}
 		// if (newData) {
 		// 	// //scene.updateMatrixWorld();
-		newData = false;
+			newData = false;
 		// }
 	};
 	//////////////////////////////
@@ -50,13 +50,17 @@ jQuery(function(){
 	///////// RENDER DAT /////////
 	render();
 	socket.on('navdata', function(data){
-		if (!newData && navData != 0){
+
+		if (!newData && navData != 0 && data != null){
 			newData = true;
+
 			line.translateY(navData.demo.altitude * 4);
 			line.translateY(-data.demo.altitude * 4);
-			drone.rotation.x = data.demo.frontBackDegrees / 50;
 			drone.rotation.z = data.demo.leftRightDegrees / 50;
-
+			// var euler = 
+			// new THREE.Euler(data.demo.frontBackDegrees, -4.7,data.demo.leftRightDegrees, 'XYZ');
+			// drone.position.applyEuler(euler);			
+			drone.rotation.y = - 4.7;
 			navData = data;
 		} else if (navData == 0){
 			//first run of the api
