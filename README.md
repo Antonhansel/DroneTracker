@@ -28,6 +28,10 @@ You can change basic configuration of the app in /config/config.js
 ### Development
 Want to contribute? Great! Feel free to open an issue or make a pull request!
 
+In the config.js file located in config.js you can change the defaults ports off the application.
+
+Set the 'dev' option to true when working on parts of the project that do no require to be connected to an ARDrone. Navdata will be injected on the client level and the server will not try to connect to the image stream.
+
 ### API
 The API is a socket.io server listening on port 3000.
 
