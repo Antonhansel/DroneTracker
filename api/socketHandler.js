@@ -2,7 +2,7 @@
 * @Author: antonhansel
 * @Date:   2015-01-17 10:45:39
 * @Last Modified by:   antonhansel
-* @Last Modified time: 2015-01-21 14:04:09
+* @Last Modified time: 2015-01-22 14:54:43
 */
 var speed = 2;
 var fs = require('fs');
@@ -12,6 +12,16 @@ var navigationData = [];
 var index = 0;
 //var detection 		= require('../modules/detection');
 var config 			= require('../config/config.js');
+if (config.dev){
+	fs.readFile('./config/test.txt', function(err, data){
+		if (err) console.log('Error when opening fake data file: ' + err);
+		else {
+			data.toString().split('\n').forEach(function(line){
+				navigationData.push(JSON.parse(line));
+			});
+		}
+	});
+}
 
 module.exports = function(droneSocket, io){
 	if (!config.dev) var pngStream = droneSocket.getPngStream();
@@ -26,9 +36,11 @@ module.exports = function(droneSocket, io){
 				// detection.matrixHandler(pngBuffer, function(result){
 				// 	if (result.length > 0) console.log(result);
 				// });
-			});
+		});
 		}
-		// droneSocket.on('navdata', function(navdata){
+		/////////////////////////////////////////////////////////////
+		//Navdata handler
+		// droneSocket.on('navdata', function(navdata){ // in case we need to spoof new navdata
 		// 	if (navigationData.length < 150){
 		// 		navigationData.push(navdata);
 		// 	} else if (write == false){
@@ -38,29 +50,18 @@ module.exports = function(droneSocket, io){
 		// 		});
 		// 	}
 		// });
-		/////////////////////////////////////////////////////////////
-		//Navdata handler
 		if (!config.dev){
 			droneSocket.on('navdata', function(navdata){
 				socket.emit('navdata', navdata);
 			});
 		} else {
-			if (navigationData.length == 0){
-				fs.readFile('./config/test.txt', function(err, data){
-					if (err) console.log('Error when opening fake data file: ' + err);
-					else {
-						data.toString().split('\n').forEach(function(line){
-							navigationData.push(JSON.parse(line));
-						});
-					}
-				});
-			} else {
-				setInterval(function(data){ 
-				if (index > navigationData.length) index = 0;
-				else index++;
+			setInterval(function(data){ 
+				if (index > navigationData.length) 
+					index = 0;
+				else 
+					index++;
 				socket.emit('navdata', navigationData[index]);
-				}, 50);
-			}
+			}, 50);
 		}
 		/////////////////////////////////////////////////////////////
 		//Other commands
