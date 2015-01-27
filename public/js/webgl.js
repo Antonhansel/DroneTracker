@@ -9,8 +9,16 @@ var newFrame = false;
 var newData = false;
 var oculusView = false;
 var effect;
+var width = window.innerWidth;
+var height = window.innerHeight;
 var clock = new THREE.Clock();
 var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+//Set up for HUD
+var cameraOrtho = cameraOrtho = new THREE.OrthographicCamera( - width / 2, width / 2, height / 2, - height / 2, 1, 10 );
+cameraOrtho.position.z = 10;
+var sceneOrtho = new THREE.Scene();
+var mapA = THREE.ImageUtils.loadTexture("js/sprite0.png", undefined, createHUDSprites);
+////////////////
 var renderer = new THREE.WebGLRenderer();
 document.body.appendChild(renderer.domElement);
 var socket = io('http://localhost:3000');
@@ -24,10 +32,15 @@ jQuery(function(){
 		requestAnimationFrame(render);
 		controls.update(clock.getDelta());
 		// oculuscontrol.update(clock.getDelta());
-		if (oculusView) 
+		renderer.clear();
+		if (oculusView) {
 			effect.render(scene, camera);
-		else 
+		}
+		else {
 			renderer.render(scene, camera);
+			renderer.clearDepth();
+			renderer.render(sceneOrtho, cameraOrtho);
+		}
 		if (newFrame){
 			imgDisplay.material.map = new THREE.ImageUtils.loadTexture('data:image/png;base64,' + lastFrame);
 			newFrame = false;
