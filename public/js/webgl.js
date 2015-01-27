@@ -45,6 +45,7 @@ jQuery(function(){
 	initLights();
 	initCamera();
 	initGrid();
+	initCockpit();
 	initGui();
 	//////////////////////////////
 	///////// RENDER DAT /////////
