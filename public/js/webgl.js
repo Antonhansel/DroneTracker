@@ -7,7 +7,7 @@ var navData = 0;
 var lastFrame;
 var newFrame = false;
 var newData = false;
-var oculusView = false;
+var oculusView = true;
 var effect;
 var width = window.innerWidth;
 var height = window.innerHeight;
@@ -18,6 +18,8 @@ var cameraOrtho = cameraOrtho = new THREE.OrthographicCamera( - width / 2, width
 cameraOrtho.position.z = 10;
 var sceneOrtho = new THREE.Scene();
 var mapA = THREE.ImageUtils.loadTexture("js/sprite0.png", undefined, createHUDSprites);
+// mapA.lookAt(camera.position);
+// scene.add(camera.position);
 ////////////////
 var renderer = new THREE.WebGLRenderer();
 document.body.appendChild(renderer.domElement);
@@ -34,7 +36,7 @@ jQuery(function(){
 		// oculuscontrol.update(clock.getDelta());
 		renderer.clear();
 		if (oculusView) {
-			effect.render(scene, camera);
+			effect.render(scene, camera, sceneOrtho, cameraOrtho);
 		}
 		else {
 			renderer.render(scene, camera);

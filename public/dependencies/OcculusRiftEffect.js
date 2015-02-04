@@ -51,7 +51,7 @@ THREE.OculusRiftEffect = function ( renderer, options ) {
 	this.preRightRender = function() {};
 
 	renderer.autoClear = false;
-	var emptyColor = new THREE.Color("black");
+	var emptyColor = new THREE.Color("black"); //change back to black
 
 	// Render target
 	var RTParams = { minFilter: THREE.LinearFilter, magFilter: THREE.NearestFilter, format: THREE.RGBAFormat };
@@ -163,6 +163,65 @@ THREE.OculusRiftEffect = function ( renderer, options ) {
 		right.viewport = [width/2, height/2 - HMD.vResolution/2, HMD.hResolution/2, HMD.vResolution];
 
 		renderer.setSize( width, height );
+	};
+
+	this.renderWithHud = function ( scene, camera, sceneOrtho, cameraOrtho ) {
+		var cc = renderer.getClearColor().clone();
+
+		// Clear
+		renderer.setClearColor(emptyColor);
+		renderer.clear();
+		renderer.setClearColor(cc);
+
+		// camera parameters
+		if (camera.matrixAutoUpdate) camera.updateMatrix();
+
+		// Render left
+		this.preLeftRender();
+
+		pCamera.projectionMatrix.copy(left.proj);
+
+		pCamera.matrix.copy(camera.matrix).multiply(left.tranform);
+		pCamera.matrixWorldNeedsUpdate = true;
+
+		renderer.setViewport(left.viewport[0], left.viewport[1], left.viewport[2], left.viewport[3]);
+
+		RTMaterial.uniforms['lensCenter'].value = left.lensCenter;
+		renderer.render( scene, pCamera, renderTarget, true );
+		///////
+		pCamera.projectionMatrix.copy(left.proj);
+
+		pCamera.matrix.copy(cameraOrtho.matrix).multiply(left.tranform);
+		pCamera.matrixWorldNeedsUpdate = true;
+		renderer.render( sceneOrtho, cameraOrtho, renderTarget, true);
+		
+		renderer.render( finalScene, oCamera);
+		// Render hud
+		//if (cameraOrtho.matrixAutoUpdate) cameraOrtho.updateMatrix();
+
+		// if (cameraOrtho.matrixAutoUpdate) cameraOrtho.updateMatrix();
+		// pCamera.matrix.copy(cameraOrtho.matrix).multiply(left.tranform);
+		// // pCamera.matrix.copy(cameraOrtho.matrix);
+		// pCamera.matrixWorldNeedsUpdate = true;
+
+		// renderer.clearDepth();
+		// renderer.render( sceneOrtho, pCamera, renderTarget, true);
+				
+		// Render right
+		// this.preRightRender();
+
+		// pCamera.projectionMatrix.copy(right.proj);
+
+		// pCamera.matrix.copy(camera.matrix).multiply(right.tranform);
+		// pCamera.matrixWorldNeedsUpdate = true;
+
+		// renderer.setViewport(right.viewport[0], right.viewport[1], right.viewport[2], right.viewport[3]);
+
+		// RTMaterial.uniforms['lensCenter'].value = right.lensCenter;
+
+		// renderer.render( scene, pCamera, renderTarget, true );
+		// renderer.render( finalScene, oCamera );
+
 	};
 
 	this.render = function ( scene, camera ) {
